@@ -1,0 +1,15 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: tectonic-config
+  namespace: tectonic-system
+data:
+  clusterID: "323d01db-8076-97de-e7f1-ce12e5a5a6c8"
+  clusterName: "ec-cluster-dev"
+  installerPlatform: "aws"
+  certificatesStrategy: "installerGeneratedCA"
+  tectonicUpdaterEnabled: "false"
+  consoleBaseAddress: "https://ec-cluster-dev.smokypro.com"
+  kubeAPIServerURL: "https://ec-cluster-dev-api.smokypro.com:443"
+  tectonicVersion: "1.7.1-tectonic.2"
+  dexAPIHost: "tectonic-identity-api.tectonic-system.svc.cluster.local:5557"

@@ -1,0 +1,49 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: tectonic-identity
+  namespace: tectonic-system
+data:
+  issuer: https://ec-cluster-dev.smokypro.com/identity
+  consoleClientID: tectonic-console
+  consoleSecret: irIPhDIr0GtuokOSeENGNg
+  kubectlClientID: tectonic-kubectl
+  kubectlSecret: dnUJzLgtn-x1ro9xUohFxA
+  config.yaml: |
+    issuer: https://ec-cluster-dev.smokypro.com/identity
+    storage:
+      type: kubernetes
+      config:
+        inCluster: true
+    web:
+      http: 0.0.0.0:5556
+    grpc:
+      addr: 0.0.0.0:5557
+      tlsCert: /etc/tectonic-identity-grpc-server-secret/tls-cert
+      tlsKey: /etc/tectonic-identity-grpc-server-secret/tls-key
+      tlsClientCA: /etc/tectonic-identity-grpc-server-secret/ca-cert
+    frontend:
+      theme: 'tectonic'
+      issuer: 'Tectonic Identity'
+    oauth2:
+      skipApprovalScreen: true
+    staticClients:
+    - id: tectonic-console
+      redirectURIs:
+      - 'https://ec-cluster-dev.smokypro.com/auth/callback'
+      - 'https://ec-cluster-dev.smokypro.com/prometheus/auth/callback'
+      - 'https://ec-cluster-dev.smokypro.com/alertmanager/auth/callback'
+      name: 'Tectonic Console'
+      secret: irIPhDIr0GtuokOSeENGNg
+    - id: tectonic-kubectl
+      public: true
+      trustedPeers:
+      - tectonic-console
+      name: 'Kubectl'
+      secret: dnUJzLgtn-x1ro9xUohFxA
+    enablePasswordDB: true
+    staticPasswords:
+    - email: "admin@entercloud.info"
+      hash: "$2a$10$RoCm1e5t6Em/HQJgpsWqaueDxuQq6p63hhHAdsBPJGlWaYWtmZDxi"
+      username: "admin"
+      userID: "fW0tNNNRISRUgE02dOsopQ"
